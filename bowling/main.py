@@ -9,7 +9,7 @@ def main():
     all_dataset.sort(key = lambda x: x ["total_score"], reverse= True)              #& Ordina i dati secondo la chiave "total score"
     print_output(all_dataset)
     find_best_zeros_and_strikes(all_dataset)
-
+    f.close()
 #* aggiunge ad una lista un diozionario per ogni giocatore con le relative informazioni 
 def get_info_on_player(line):
     data = line.strip().split(";")
