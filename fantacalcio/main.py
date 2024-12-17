@@ -56,8 +56,7 @@ def request_dict(role_d):
                         print(f"The best is {p1}")
                     else: 
                         print(f"The best one is {p2}")
-                    
-
+    
             if not role_match:                                      #& i due giocatori giocano in ruoli diversi
                 print("Can't compare 2 players in different roles")
 
