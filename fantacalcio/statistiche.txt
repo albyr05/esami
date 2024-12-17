@@ -1,0 +1,9 @@
+Guglielmo Gabetto A 0.91 7.00 21 2 0
+Guglielmo Gabetto A 0.95 7.50 23 3 1
+Felice Cerri D 0.87 7.00 0 4 2
+Romeo Menti A 0.75 6.50 12 2 0
+Hector Puricelli A 0.93 7.00 15 4 0
+Valerio Bacigalupo P 0.92 7.50 0 3 0
+Aldo Ballarin D 0.88 6.00 0 3 1
+Virgilio Maroso D 0.66 5.00 0 1 1
+Eusebio Castigliano C 0.83 6.50 0 4 1
