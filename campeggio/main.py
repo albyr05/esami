@@ -1,7 +1,6 @@
 import os
 os.chdir(os.path.dirname(__file__))  # Cambia directory al percorso del file corrente
 
-
 def main():
     try:
         f = open("occupazione.txt", "r")
