@@ -6,7 +6,7 @@ os.chdir(os.path.dirname(__file__))
 def get_chararacters():
     chararacters= []
     f = open ("personaggi.txt", "r")
-    properties = f.readline().strip().split(";")        #& salvo le caraatteristiche
+    properties = f.readline().strip().split(";")        #& salvo le caratteristiche
     for line in f:
         char = {}
         data = line.strip().split(";")

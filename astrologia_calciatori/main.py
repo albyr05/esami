@@ -1,5 +1,7 @@
 import csv
+import os
 from operator import itemgetter
+os.chdir(os.path.dirname(__file__))
 def get_soccer_info():
     f = open("sportivi.csv", "r")
     data = csv.reader(f, delimiter="\t")    
