@@ -32,11 +32,15 @@ def printoutput(output):
 def main():
     _map = get_map()
     output = copy.deepcopy(_map)
-    directions = [(-2, -2), (-2, -1), (-2, 0), (-2, 1), (-2, 2),
-    (-1, -2), (-1, -1), (-1, 0), (-1, 1), (-1, 2),
-    (0, -2), (0, -1), (0, 1), (0, 2), 
-    (1, -2), (1, -1), (1, 0), (1, 1), (1, 2),
-    (2, -2), (2, -1), (2, 0), (2, 1), (2, 2)]
+    d = 2 
+    directions = []
+    for x in range(-d, d+1):
+        for y in range(-d, d+1):
+            if x == y == 0:
+                pass
+            else:
+                directions.append((x, y))
+    
     for i in range(len(_map)):
         for j in range(len(_map)):
             if not check_high(i, j, _map, directions):
