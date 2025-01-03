@@ -26,7 +26,10 @@ def check_high(i, j, _map, directions):
 def printoutput(output):
     for i in range(len(output)):
         for j in range(len(output)):
-            print(output[i][j], end= " ")
+            if output[i][j] != "-":
+                print(output[i][j], end= "")
+            else:
+                print(output[i][j], end= " ")
         print()
 
 def main():
