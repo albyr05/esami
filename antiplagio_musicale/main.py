@@ -2,6 +2,7 @@ import os
 
 os.chdir(os.path.dirname(__file__))
 
+
 def get_songs():
     songs = dict()  
     with open("songs.txt") as f:
@@ -10,69 +11,50 @@ def get_songs():
             songs[title] = list(map(int, notes.split()))
     return songs                                            #& Ho un dizionario con chiave titolo e valore lista di note
 
-
-def check_plagio(current, previous):
-    plagi = list()                          #& mi salvo nella lista i titoli di cui la canzone è plagio
-    for title, notes in previous:
-        
-        if current[1] == notes:                     #& le canzoni sono identiche e salvo il titolo nella lista
-            if title not in plagi:
-                plagi.append(title)
-
-    return plagi
-   
-
-def check_copiatura(current, previous, plagi):
-    groups1 = [current[1][i:i+4] for i in range(len(current[1]) - 3)]                   #& divido in gruppi di quattro le note la canzone corrente
-    copiature = list()
-    for title, notes in previous:
-        if title in plagi:                                      #& balzo i titoli delle canzoni che sono plagi 
-            continue
-
-        groups2 = [notes[j:j+4] for j in range(len(notes) - 3)]             #& divido in gruppi di 4 le note del brano che sto confrontando
-        for g1 in groups1:
-            if g1 in groups2:                                               #& c'è una sequenza di 4 uguale 
-                if title not in copiature:
-                    copiature.append(title)                 #& salvo i titoli delle copiature
-    return copiature
-
-
-
-def check_sospetto(current, previous, plagi, copiature):
-    sospetti = list()
-    groups1 = [current[1][i:i+4] for i in range(len(current[1]) - 3)]
+def check_plagio(current, song):
+    if current[1] == song:
+        return True                                                 #& controllo se c'è plagio
+    else:
+        return False
     
-    for title, notes in previous:
-        if title in plagi or title in copiature:                #& balzo i titoli che sono già plagi o copiature
-            continue
+def divide_groups(song):
+    return [song[j:j+4] for j in range(len(song) - 3)]
+   
+def check_copiatura(groups1, groups2):
+    for g1 in groups1:
+        if g1 in groups2:                                               #& c'è una sequenza di 4 uguale 
+            return True                                                 #& return true (la canzone corrente è copiatura di una precedente)
+    
+    return False                                                        #& non c'è copiatura
 
-        groups2 = [notes[j:j+4] for j in range(len(notes) - 3)]
-
-        for g1 in groups1:
-            for g2 in groups2:
-                difference = g1[0] - g2[0]                              #& trovo la differenza tra i primi elementi di ogni sottogruppo
-                if all((n1 - n2) == difference for n1, n2 in zip(g1, g2)):          #& se la differenza è uguale per tutti gli elementi di due sottogruppi
-                    if title not in sospetti:
-                        sospetti.append(title)                  #& salvo i titoli di sospetti
-    return sospetti
-
+def check_sospetto(groups1, groups2):
+    for g1 in groups1:
+        for g2 in groups2:
+            difference = g1[0] - g2[0]                              #& trovo la differenza tra i primi elementi di ogni sottogruppo
+            if all((n1 - n2) == difference for n1, n2 in zip(g1, g2)):          #& se la differenza è uguale per tutti gli elementi di due sottogruppi
+                return True                                                 #& return true (la canzone corrente è sospetto di quella precedente)
+            
+    return False                                    #& non è sospetto
 
 def main():
     songs = list(get_songs().items())
     for i in range(len(songs)):
         current = songs[i]
         previous = songs[:i]            #& sono i (titoli, note) di tutte i brani precedenti a quello corrente 
+        for title, song in previous:                        #& ciclo sulle coppie (titolo, canzone) precedenti a quelle corrente, questo mi permette di fare un confronto con ogni singola canzone precedente e vedere che rapporto c'è tra le due 
         
-        plagi = check_plagio(current, previous)             #& sono tutti i titoli dei plagi
-        for i in range(len(plagi)):
-            print(f"{current[0]} è PLAGIO di {plagi[i]}")
+            if check_plagio(current, song):
+                print(f"{current[0]} è PLAGIO di {title}")                  #& stampo in caso sia plagio
+       
+            else:
+                groups1 = divide_groups(current[1])                 #& divido le note in sequenze da 4
+                groups2 = divide_groups(song)
 
-        copiature = check_copiatura(current, previous, plagi)            #& sono tutti i titoli delle copiature 
-        for i in range(len(copiature)):
-            print(f"{current[0]} è COPIATURA di {copiature[i]}")
+                if check_copiatura(groups1, groups2):                            #& se non era plagio controllo se è copiatura
+                    print(f"{current[0]} è COPIATURA di {title}")
 
-        sospetti = check_sospetto(current, previous, plagi, copiature)            #& sono tutti i titoli dei sospetti 
-        for i in range(len(sospetti)):
-            print(f"{current[0]} è SOSPETTO di {sospetti[i]}")
+                elif check_sospetto(groups1, groups2):                             #& se non è nè plagio nè copiatura controllo se è sospetto
+                    print(f"{current[0]} è SOSPETTO di {title}")
+            
 
 main()
