@@ -31,9 +31,14 @@ def check_sospetto(groups1, groups2):
     for g1 in groups1:
         for g2 in groups2:
             difference = g1[0] - g2[0]                              #& trovo la differenza tra i primi elementi di ogni sottogruppo
-            if all((n1 - n2) == difference for n1, n2 in zip(g1, g2)):          #& se la differenza è uguale per tutti gli elementi di due sottogruppi
-                return True                                                 #& return true (la canzone corrente è sospetto di quella precedente)
-            
+            for i in range(1, len(g1)):
+                okay = True
+                if g1[i] - g2[i] != difference:
+                    okay = False
+                    
+            if okay == True:
+                return True
+                    
     return False                                    #& non è sospetto
 
 def main():
