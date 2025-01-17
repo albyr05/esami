@@ -7,8 +7,8 @@ def get_oasis():
     safety = []
     for line in f:
         parts = line.strip().split()
-        if parts[2] in ["oasis", "cathedral", "mercenaries"]:
-            safety.append((int(parts[0]), int(parts[1])))  
+        
+        safety.append((int(parts[0]), int(parts[1])))  
     f.close()
     return safety
 
@@ -20,23 +20,19 @@ def get_survivors(line):
 
 
 def check_exit(start, km):
-    directions = [(0, 1), (1, 0), (-1, 0), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)]
-    x, y = start
-    steps = 0  
-    out = False
-    while steps < km and not out: 
-        for d in directions:
-            if steps >= km:  
-                break
-            next_x, next_y = x + d[0], y + d[1]
-            if next_x < 0 or next_x > 500 or next_y < 0 or next_y > 500:  
-                out = True
-                break
-            else:  
-                x, y = next_x, next_y
-                steps += 1
+    exit = False
+    x, y = start[0], start[1]
+    if y+km > 500:
+        exit = True
+    elif x+km > 500:
+        exit = True
+    elif y-km < 0:
+        exit = True
+    elif x-km < 0:
+        exit = True
+    
+    return exit
 
-    return out
 
 def look_for_oasis(person, oasis):
     km = person["km"]
