@@ -7,8 +7,8 @@ def get_oasis():
     safety = []
     for line in f:
         parts = line.strip().split()
-        
-        safety.append((int(parts[0]), int(parts[1])))  
+        if parts[2] in "oasis":
+            safety.append((int(parts[0]), int(parts[1])))  
     f.close()
     return safety
 
