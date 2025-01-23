@@ -1,0 +1,10 @@
+alby 5 
+alice 5 
+Paolo 4 
+ciao 4 
+CIAOOOOOOOOOO 3 
+Lucia 1 
+Mario 1 
+Giuseppe 0 
+Marta 0 
+caio 0 
