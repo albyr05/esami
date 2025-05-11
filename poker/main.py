@@ -77,8 +77,4 @@ def main():
             result = "Niente.."             #&  se non ha fatto nulla
         print(f"{result}")
 
-main()
-
-
-
-              
+main()           
